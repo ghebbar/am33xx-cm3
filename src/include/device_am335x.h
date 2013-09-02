@@ -193,7 +193,7 @@
 /* SMA2_SPARE_REG bit fields: */
 #define VSLDO_CORE_AUTO_RAMP_EN	(1 << 1)
 
-#define __raw_readl(a)		(*(volatile int *)(a))
-#define __raw_writel(v, a)	(*(volatile int *)(a) = v)
+#define __raw_readl(a)		(*(volatile unsigned int *)(a))
+#define __raw_writel(v, a)	(*(volatile unsigned int *)(a) = v)
 
 #endif

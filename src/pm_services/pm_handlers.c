@@ -22,7 +22,7 @@
 void a8_lp_cmd1_handler(struct cmd_data *data, char use_default_val)
 {
 	struct rtc_data *local_cmd = (struct rtc_data *)data->data;
-	int timeout = 0;
+	unsigned int timeout = 0;
 
 	/* If RTC module if not already configured... cannot continue */
 	rtc_enable_check();
@@ -58,7 +58,7 @@ void a8_lp_cmd1_handler(struct cmd_data *data, char use_default_val)
 void a8_lp_cmd2_handler(struct cmd_data *data, char use_default_val)
 {
 	struct rtc_data *rtc_data = (struct rtc_data *)data->data;
-	int timeout = 0;
+	unsigned int timeout = 0;
 
 	if (!rtc_data->rtc_timeout_val &&
 		(rtc_data->rtc_timeout_val < RTC_TIMEOUT_MAX))
@@ -89,9 +89,9 @@ void a8_lp_cmd3_handler(struct cmd_data *data, char use_default_val)
 {
 	struct deep_sleep_data *local_cmd = (struct deep_sleep_data *)data->data;
 
-	int per_st = 0;
-	int mpu_st = 0;
-	int temp;
+	unsigned int per_st = 0;
+	unsigned int mpu_st = 0;
+	unsigned int temp;
 
 	configure_wake_sources(local_cmd->wake_sources, use_default_val);
 
@@ -177,8 +177,8 @@ void a8_lp_cmd5_handler(struct cmd_data *data, char use_default_val)
 {
 	struct deep_sleep_data *local_cmd = (struct deep_sleep_data *)data->data;
 
-	int per_st = 0;
-	int mpu_st = 0;
+	unsigned int per_st = 0;
+	unsigned int mpu_st = 0;
 
 	/* Disable MOSC if possible */
 	if (use_default_val || !(local_cmd->mosc_state))
@@ -244,8 +244,8 @@ void a8_lp_cmd7_handler(struct cmd_data *data, char use_default_val)
 {
 	struct deep_sleep_data *local_cmd = (struct deep_sleep_data *)data->data;
 
-	int per_st = 0;
-	int mpu_st = 0;
+	unsigned int per_st = 0;
+	unsigned int mpu_st = 0;
 
 	/* Disable MOSC if possible */
 	if (use_default_val || !(local_cmd->mosc_state))
@@ -299,8 +299,8 @@ void a8_standby_handler(struct cmd_data *data, char use_default_val)
 {
 	struct deep_sleep_data *local_cmd =
 		(struct deep_sleep_data *)data->data;
-	int mpu_st = 0;
-	int per_st = 0;
+	unsigned int mpu_st = 0;
+	unsigned int per_st = 0;
 
 	configure_standby_wake_sources(local_cmd->wake_sources,
 			use_default_val);

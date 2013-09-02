@@ -45,36 +45,36 @@
 #define RTC_TIMEOUT_MAX		0xf
 
 struct rtc_data {
-	int rtc_timeout_val :4;	/* Delay for RTC alarm timeout. Default = 2secs */
+	unsigned int rtc_timeout_val :4;	/* Delay for RTC alarm timeout. Default = 2secs */
 };
 
 struct deep_sleep_data {
-	int mosc_state :1;			/* MOSC to be kept on (1) or off (0) */
-	int deepsleep_count :16;		/* Count of how many OSC clocks needs to be seen \
+	unsigned int mosc_state :1;			/* MOSC to be kept on (1) or off (0) */
+	unsigned int deepsleep_count :16;		/* Count of how many OSC clocks needs to be seen \
 						before exiting deep sleep mode */
 
-	int vdd_mpu_val :15;			/* If vdd_mpu is to be lowered, vdd_mpu in mV */
+	unsigned int vdd_mpu_val :15;			/* If vdd_mpu is to be lowered, vdd_mpu in mV */
 
-	int pd_mpu_state :2;			/* Powerstate of PD_MPU */
-	int pd_mpu_ram_ret_state :1;		/* Sabertooth RAM in retention state */
-	int pd_mpu_l1_ret_state :1;		/* L1 memory in retention state */
-	int pd_mpu_l2_ret_state :1;		/* L2 memory in retention state */
-	int pd_mpu_ram_on_state :2;		/* Sabertooth RAM in ON state */
+	unsigned int pd_mpu_state :2;			/* Powerstate of PD_MPU */
+	unsigned int pd_mpu_ram_ret_state :1;		/* Sabertooth RAM in retention state */
+	unsigned int pd_mpu_l1_ret_state :1;		/* L1 memory in retention state */
+	unsigned int pd_mpu_l2_ret_state :1;		/* L2 memory in retention state */
+	unsigned int pd_mpu_ram_on_state :2;		/* Sabertooth RAM in ON state */
 
-	int pd_per_state :2;	 		/* Powerstate of PD_PER */
-	int pd_per_icss_mem_ret_state :1;	/* ICSS memory in retention state */
-	int pd_per_mem_ret_state :1; 		/* Other memories in retention state */
-	int pd_per_ocmc_ret_state :1; 		/* OCMC memory in retention state */
-	int pd_per_icss_mem_on_state :2; 	/* ICSS memory in ON state */
-	int pd_per_mem_on_state :2; 		/* Other memories in ON state */
-	int pd_per_ocmc_on_state :2; 		/* OCMC memory in ON state */
+	unsigned int pd_per_state :2;	 		/* Powerstate of PD_PER */
+	unsigned int pd_per_icss_mem_ret_state :1;	/* ICSS memory in retention state */
+	unsigned int pd_per_mem_ret_state :1; 		/* Other memories in retention state */
+	unsigned int pd_per_ocmc_ret_state :1; 		/* OCMC memory in retention state */
+	unsigned int pd_per_icss_mem_on_state :2; 	/* ICSS memory in ON state */
+	unsigned int pd_per_mem_on_state :2; 		/* Other memories in ON state */
+	unsigned int pd_per_ocmc_on_state :2; 		/* OCMC memory in ON state */
 
-	int wake_sources :13;			/* Wake sources */
+	unsigned int wake_sources :13;			/* Wake sources */
 						/* USB, I2C0, RTC_ALARM, TIMER1 \
 						   UART0, GPIO0_WAKE0, GPIO0_WAKE1, \
 						   WDT1, ADTSC, RTC_TIMER, USBWOUT0, \
 						   MPU, USBWOUT1 */
-	int reserved :1;			/* Internal use */
+	unsigned int reserved :1;			/* Internal use */
 };
 
 int reg_mod(int, int, int);
@@ -94,26 +94,26 @@ void mpu_clkdm_sleep(void);
 void mpu_clkdm_wake(void);
 void wkup_clkdm_sleep(void);
 void wkup_clkdm_wake(void);
-int pd_state_change(int, int);
+int pd_state_change(unsigned int, int);
 void pd_state_restore(void);
 
-int mpu_ram_ret_state_change(int, int);
-int mpu_l1_ret_state_change(int, int);
-int mpu_l2_ret_state_change(int, int);
-int icss_mem_ret_state_change(int, int);
-int per_mem_ret_state_change(int, int);
-int ocmc_mem_ret_state_change(int, int);
+int mpu_ram_ret_state_change(unsigned int, unsigned int);
+int mpu_l1_ret_state_change(unsigned int, unsigned int);
+int mpu_l2_ret_state_change(unsigned int, unsigned int);
+int icss_mem_ret_state_change(unsigned int, unsigned int);
+int per_mem_ret_state_change(unsigned int, unsigned int);
+int ocmc_mem_ret_state_change(unsigned int, unsigned int);
 
-int mpu_ram_on_state_change(int, int);
-int icss_mem_on_state_change(int, int);
-int per_mem_on_state_change(int, int);
-int ocmc_mem_on_state_change(int, int);
+int mpu_ram_on_state_change(unsigned int, unsigned int);
+int icss_mem_on_state_change(unsigned int, unsigned int);
+int per_mem_on_state_change(unsigned int, unsigned int);
+int ocmc_mem_on_state_change(unsigned int, unsigned int);
 
-int per_powerst_change(int, int);
-int mpu_powerst_change(int, int);
+int per_powerst_change(unsigned int, unsigned int);
+int mpu_powerst_change(unsigned int, unsigned int);
 
-int get_pd_per_stctrl_val(int);
-int get_pd_mpu_stctrl_val(int);
+unsigned int get_pd_per_stctrl_val(int);
+unsigned int get_pd_mpu_stctrl_val(int);
 
 int verify_pd_transitions(void);
 

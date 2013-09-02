@@ -16,19 +16,19 @@
 #include <stdint.h>
 
 struct ipc_data {
-	int reg1;
-	int reg2;
-	int reg3;
-	int reg4;
-	int reg5;
-	int reg6;
-	int reg7;
-	int reg8;
+	unsigned int reg1;
+	unsigned int reg2;
+	unsigned int reg3;
+	unsigned int reg4;
+	unsigned int reg5;
+	unsigned int reg6;
+	unsigned int reg7;
+	unsigned int reg8;
 };
 
 struct ds_data {
-	int reg1;
-	int reg2;
+	unsigned int reg1;
+	unsigned int reg2;
 };
 
 
@@ -42,21 +42,21 @@ struct ipc_data a8_m3_data_r;
 struct ipc_data	a8_m3_data_w;
 struct ds_data	a8_m3_ds_data;
 
-int ipc_reg_r;
-int ipc_reg_w;
+unsigned int ipc_reg_r;
+unsigned int ipc_reg_w;
 
 short cmd_id;
 short cmd_stat;
 
 int cmd_wake_sources;
-int pd_mpu_stctrl_next_val;
-int pd_mpu_stctrl_prev_val;
-int pd_per_stctrl_next_val;
-int pd_per_stctrl_prev_val;
-int pd_mpu_pwrstst_next_val;
-int pd_mpu_pwrstst_prev_val;
-int pd_per_pwrstst_next_val;
-int pd_per_pwrstst_prev_val;
+unsigned int pd_mpu_stctrl_next_val;
+unsigned int pd_mpu_stctrl_prev_val;
+unsigned int pd_per_stctrl_next_val;
+unsigned int pd_per_stctrl_prev_val;
+unsigned int pd_mpu_pwrstst_next_val;
+unsigned int pd_mpu_pwrstst_prev_val;
+unsigned int pd_per_pwrstst_next_val;
+unsigned int pd_per_pwrstst_prev_val;
 
 unsigned int am335x_soc_rev;
 
@@ -106,8 +106,8 @@ void trace_get_current_pos(void);
 void trace_set_current_pos(void);
 
 int rtc_enable_check(void);
-int rtc_reg_read(int);
-void rtc_reg_write(int, int);
+unsigned int rtc_reg_read(int);
+void rtc_reg_write(unsigned int, int);
 
 void setup_am335x_soc_revision(void);
 unsigned int get_am335x_soc_rev(void);

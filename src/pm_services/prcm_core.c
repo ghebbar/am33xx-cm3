@@ -159,9 +159,9 @@ unsigned int get_am335x_soc_rev(void)
 	return am335x_soc_rev;
 }
 
-int var_mod(int var, int mask, int bit_val)
+unsigned int var_mod(unsigned int var, int mask, int bit_val)
 {
-	int v;
+	unsigned int v;
 
 	v = var;
 	v &= ~mask;
@@ -212,7 +212,7 @@ int module_state_change(int state, int reg)
 
 static void _clkdm_sleep(int reg)
 {
-	int var = 0;
+	unsigned int var = 0;
 
 	var = __raw_readl(reg);
 	var = var_mod(var, DEFAULT_CLKTRCTRL_MASK, DEFAULT_CLKTRCTRL_SLEEP);
@@ -221,7 +221,7 @@ static void _clkdm_sleep(int reg)
 
 static void _clkdm_wakeup(int reg)
 {
-	int var = 0;
+	unsigned int var = 0;
 
 	var = __raw_readl(reg);
 	var = var_mod(var, DEFAULT_CLKTRCTRL_MASK, DEFAULT_CLKTRCTRL_WAKE);
@@ -363,7 +363,7 @@ void wkup_clkdm_wake(void)
 }
 
 /* PD related */
-int pd_state_change(int val, int pd)
+int pd_state_change(unsigned int val, int pd)
 {
 	if (pd == PD_MPU) {
 		pd_mpu_stctrl_next_val	= val;
@@ -378,7 +378,7 @@ int pd_state_change(int val, int pd)
 	return 0;
 }
 
-int mpu_ram_ret_state_change(int val, int var)
+int mpu_ram_ret_state_change(unsigned int val, unsigned int var)
 {
 	var = var_mod(var, MPU_RAM_RETSTATE_MASK,
 				 (val << MPU_RAM_RETSTATE_SHIFT));
@@ -386,7 +386,7 @@ int mpu_ram_ret_state_change(int val, int var)
 	return var;
 }
 
-int mpu_l1_ret_state_change(int val, int var)
+int mpu_l1_ret_state_change(unsigned int val, unsigned int var)
 {
 	var = var_mod(var, MPU_L1_RETSTATE_MASK,
 				 (val << MPU_L1_RETSTATE_SHIFT));
@@ -394,7 +394,7 @@ int mpu_l1_ret_state_change(int val, int var)
 	return var;
 }
 
-int mpu_l2_ret_state_change(int val, int var)
+int mpu_l2_ret_state_change(unsigned int val, unsigned int var)
 {
 	var = var_mod(var, MPU_L2_RETSTATE_MASK,
 				(val << MPU_L2_RETSTATE_SHIFT));
@@ -402,7 +402,7 @@ int mpu_l2_ret_state_change(int val, int var)
 	return var;
 }
 
-int icss_mem_ret_state_change(int val, int var)
+int icss_mem_ret_state_change(unsigned int val, unsigned int var)
 {
 	var = var_mod(var, PER_ICSS_MEM_RETSTATE_MASK,
 				 (val << PER_ICSS_MEM_RETSTATE_SHIFT));
@@ -410,7 +410,7 @@ int icss_mem_ret_state_change(int val, int var)
 	return var;
 }
 
-int per_mem_ret_state_change(int val, int var)
+int per_mem_ret_state_change(unsigned int val, unsigned int var)
 {
 	var = var_mod(var, PER_MEM_RETSTATE_MASK,
 				(val << PER_MEM_RETSTATE_SHIFT));
@@ -418,7 +418,7 @@ int per_mem_ret_state_change(int val, int var)
 	return var;
 }
 
-int ocmc_mem_ret_state_change(int val, int var)
+int ocmc_mem_ret_state_change(unsigned int val, unsigned int var)
 {
 	var = var_mod(var, PER_RAM_MEM_RETSTATE_MASK,
 				(val << PER_RAM_MEM_RETSTATE_SHIFT));
@@ -426,13 +426,13 @@ int ocmc_mem_ret_state_change(int val, int var)
 	return var;
 }
 
-int mpu_ram_on_state_change(int val, int var)
+int mpu_ram_on_state_change(unsigned int val, unsigned int var)
 {
 	/* Currently don't do anything */
 	return var;
 }
 
-int icss_mem_on_state_change(int val, int var)
+int icss_mem_on_state_change(unsigned int val, unsigned int var)
 {
 	var = var_mod(var, PER_ICSS_MEM_ONSTATE_MASK,
 				(val << PER_ICSS_MEM_ONSTATE_SHIFT));
@@ -440,7 +440,7 @@ int icss_mem_on_state_change(int val, int var)
 	return var;
 }
 
-int per_mem_on_state_change(int val, int var)
+int per_mem_on_state_change(unsigned int val, unsigned int var)
 {
 	var = var_mod(var, PER_MEM_ONSTATE_MASK,
 				(val << PER_MEM_ONSTATE_SHIFT));
@@ -448,7 +448,7 @@ int per_mem_on_state_change(int val, int var)
 	return var;
 }
 
-int ocmc_mem_on_state_change(int val, int var)
+int ocmc_mem_on_state_change(unsigned int val, unsigned int var)
 {
 	var = var_mod(var, PER_RAM_MEM_ONSTATE_MASK,
 				(val << PER_RAM_MEM_ONSTATE_SHIFT));
@@ -456,7 +456,7 @@ int ocmc_mem_on_state_change(int val, int var)
 	return var;
 }
 
-int per_powerst_change(int val, int var)
+int per_powerst_change(unsigned int val, unsigned int var)
 {
 	var = var_mod(var, PER_POWERSTATE_MASK,
 				(val << PER_POWERSTATE_SHIFT));
@@ -464,7 +464,7 @@ int per_powerst_change(int val, int var)
 	return var;
 }
 
-int mpu_powerst_change(int val, int var)
+int mpu_powerst_change(unsigned int val, unsigned int var)
 {
 	var = var_mod(var, MPU_POWERSTATE_MASK,
 				(val << MPU_POWERSTATE_SHIFT));
@@ -472,9 +472,9 @@ int mpu_powerst_change(int val, int var)
 	return var;
 }
 
-static int _next_pd_per_stctrl_val(state)
+static unsigned int _next_pd_per_stctrl_val(state)
 {
-	int v = 0;
+	unsigned int v = 0;
 
 	if (state == 0) {
 		v = per_powerst_change(ds0_data.pd_per_state, v);
@@ -514,7 +514,7 @@ static int _next_pd_per_stctrl_val(state)
 	return v;
 }
 
-int get_pd_per_stctrl_val(int state)
+unsigned int get_pd_per_stctrl_val(int state)
 {
 	/* Backup the current value for restoration */
 	pd_per_stctrl_prev_val = __raw_readl(AM335X_PM_PER_PWRSTCTRL);
@@ -522,9 +522,9 @@ int get_pd_per_stctrl_val(int state)
 	return _next_pd_per_stctrl_val(state);
 }
 
-static int _next_pd_mpu_stctrl_val(state)
+static unsigned int _next_pd_mpu_stctrl_val(state)
 {
-	int v = 0;
+	unsigned int v = 0;
 
 	if (state == 0) {
 		v = mpu_powerst_change(ds0_data.pd_mpu_state, v);
@@ -561,7 +561,7 @@ static int _next_pd_mpu_stctrl_val(state)
 	return v;
 }
 
-int get_pd_mpu_stctrl_val(int state)
+unsigned int get_pd_mpu_stctrl_val(int state)
 {
 	/* Backup the current value for restoration */
 	pd_mpu_stctrl_prev_val = __raw_readl(AM335X_PM_MPU_PWRSTCTRL);
@@ -572,7 +572,7 @@ int get_pd_mpu_stctrl_val(int state)
 /* DeepSleep related */
 int disable_master_oscillator(void)
 {
-	int v = __raw_readl(DEEPSLEEP_CTRL);
+	unsigned int v = __raw_readl(DEEPSLEEP_CTRL);
 
 	v = var_mod(v, DS_ENABLE_MASK, (1 << DS_ENABLE_SHIFT));
 
@@ -583,7 +583,7 @@ int disable_master_oscillator(void)
 
 int enable_master_oscillator()
 {
-	int v = __raw_readl(DEEPSLEEP_CTRL);
+	unsigned int v = __raw_readl(DEEPSLEEP_CTRL);
 
 	v = var_mod(v, DS_ENABLE_MASK, (0 << DS_ENABLE_SHIFT));
 
@@ -594,7 +594,7 @@ int enable_master_oscillator()
 
 void configure_deepsleep_count(int ds_count)
 {
-	int v = __raw_readl(DEEPSLEEP_CTRL);
+	unsigned int v = __raw_readl(DEEPSLEEP_CTRL);
 
 	v = var_mod(v, DS_COUNT_MASK, (ds_count << DS_COUNT_SHIFT));
 
@@ -604,7 +604,7 @@ void configure_deepsleep_count(int ds_count)
 /* 1ms timer */
 static int check_timer1(int base)
 {
-	int v = 0;
+	unsigned int v = 0;
 
 	v = __raw_readl(base + 0x10);
 
@@ -618,7 +618,7 @@ static int check_timer1(int base)
 
 static int check_i2c(int base)
 {
-	int v = 0;
+	unsigned int v = 0;
 
 	v = __raw_readl(base + 0x10);
 
@@ -632,7 +632,7 @@ static int check_i2c(int base)
 
 static int check_adtsc(int base)
 {
-	int v = 0;
+	unsigned int v = 0;
 
 	v = __raw_readl(base + 0x10);
 
@@ -646,7 +646,7 @@ static int check_adtsc(int base)
 
 static int check_uart(int base)
 {
-	int v = 0;
+	unsigned int v = 0;
 
 	v = __raw_readl(base + 0x54);
 
@@ -660,7 +660,7 @@ static int check_uart(int base)
 
 static int check_gpio(int base)
 {
-	int v = 0;
+	unsigned int v = 0;
 
 	v = __raw_readl(base + 0x10);
 
@@ -674,7 +674,7 @@ static int check_gpio(int base)
 
 static int check_rtc(int base)
 {
-	int v = 0;
+	unsigned int v = 0;
 
 	v = __raw_readl(base + 0x78);
 
@@ -688,7 +688,7 @@ static int check_rtc(int base)
 
 static int check_wdt(int base)
 {
-	int v = 0;
+	unsigned int v = 0;
 
 	v = __raw_readl(base + 0x10);
 
@@ -715,7 +715,7 @@ void configure_standby_wake_sources(int wake_sources, int mod_check)
  */
 void configure_wake_sources(int wake_sources, int mod_check)
 {
-	int v = 0;
+	unsigned int v = 0;
 
 	if (wake_sources != 0 || (mod_check == 0))
 		cmd_wake_sources = wake_sources;
@@ -876,7 +876,7 @@ void pd_state_restore(void)
 /* Checking only the stst bits for now */
 int verify_pd_transitions(void)
 {
-	int mpu_ctrl, mpu_stst, per_ctrl, per_stst;
+	unsigned int mpu_ctrl, mpu_stst, per_ctrl, per_stst;
 
 	mpu_ctrl = __raw_readl(AM335X_PM_MPU_PWRSTCTRL);
 	per_ctrl = __raw_readl(AM335X_PM_PER_PWRSTCTRL);
@@ -894,7 +894,7 @@ int verify_pd_transitions(void)
 /* New Power-down Sequence PG 2.0 */
 void dpll_power_down(unsigned int dpll)
 {
-	int dpll_reg, dpll_reg_val, dpll_pwr_sw_status_reg;
+	unsigned int dpll_reg, dpll_reg_val, dpll_pwr_sw_status_reg;
 	unsigned int sw_ctrl_dpll_bit, isoscan_bit, ret_bit, reset_bit, iso_bit;
 	unsigned int pgoodin_bit, ponin_bit;
 	unsigned int pgoodout_status_bit, ponout_status_bit;
@@ -982,7 +982,7 @@ void dpll_power_down(unsigned int dpll)
 /* New Power-up Sequence PG 2.0 */
 void dpll_power_up(unsigned int dpll)
 {
-	int dpll_reg, dpll_reg_val, dpll_pwr_sw_status_reg;
+	unsigned int dpll_reg, dpll_reg_val, dpll_pwr_sw_status_reg;
 	unsigned int sw_ctrl_dpll_bit, isoscan_bit, ret_bit, reset_bit, iso_bit;
 	unsigned int pgoodin_bit, ponin_bit;
 	unsigned int pgoodout_status_bit, ponout_status_bit;
