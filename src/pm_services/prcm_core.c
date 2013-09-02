@@ -113,6 +113,19 @@ struct deep_sleep_data standby_data =  {
 	.reserved			= 0
 };
 
+struct deep_sleep_data cpuidle_data =  {
+	.mosc_state			= MOSC_ON,
+
+	.pd_mpu_state			= PD_OFF,
+	.pd_mpu_ram_ret_state		= MEM_BANK_RET_ST_OFF,
+	.pd_mpu_l1_ret_state		= MEM_BANK_RET_ST_OFF,
+	.pd_mpu_l2_ret_state		= MEM_BANK_RET_ST_OFF,
+
+	.pd_per_state 			= PD_ON,
+
+	.wake_sources			= MPU_WAKE,
+};
+
 /* Clear out the global variables here */
 void pm_init(void)
 {
@@ -483,6 +496,15 @@ static int _next_pd_per_stctrl_val(state)
 				(standby_data.pd_per_mem_on_state, v);
 		v = ocmc_mem_on_state_change
 				(standby_data.pd_per_ocmc_on_state, v);
+	} else if (state == 4) {
+		v = per_powerst_change
+				(cpuidle_data.pd_per_state, v);
+		v = icss_mem_on_state_change
+				(cpuidle_data.pd_per_icss_mem_on_state, v);
+		v = per_mem_on_state_change
+				(cpuidle_data.pd_per_mem_on_state, v);
+		v = ocmc_mem_on_state_change
+				(cpuidle_data.pd_per_ocmc_on_state, v);
 	}
 
 	return v;
@@ -522,6 +544,15 @@ static int _next_pd_mpu_stctrl_val(state)
 			(standby_data.pd_mpu_l1_ret_state, v);
 		v = mpu_l2_ret_state_change
 			(standby_data.pd_mpu_l2_ret_state, v);
+	} else if (state == 4) {
+		v = mpu_powerst_change
+			(cpuidle_data.pd_mpu_state, v);
+		v = mpu_ram_ret_state_change
+			(cpuidle_data.pd_mpu_ram_ret_state, v);
+		v = mpu_l1_ret_state_change
+			(cpuidle_data.pd_mpu_l1_ret_state, v);
+		v = mpu_l2_ret_state_change
+			(cpuidle_data.pd_mpu_l2_ret_state, v);
 	}
 	return v;
 }
