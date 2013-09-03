@@ -15,6 +15,7 @@
 #include <cm3.h>
 #include <device_am335x.h>
 #include <low_power.h>
+#include <prcm.h>
 #include <prmam335x.h>
 #include <system_am335.h>
 
@@ -344,12 +345,32 @@ void a8_standby_handler(struct cmd_data *data, char use_default_val)
 	mpu_clkdm_sleep();
 }
 
+static unsigned int cpuidle_pd_state_modified = 0;
+
 void a8_cpuidle_handler(struct cmd_data *data, char use_default_val)
 {
-	struct deep_sleep_data *local_cmd = (struct deep_sleep_data *)data->data;
+	struct deep_sleep_data *local_cmd =
+					(struct deep_sleep_data *)data->data;
+	int mpu_st = 0;
+	int per_st = 0;
 
-	configure_standby_wake_sources(local_cmd->wake_sources, use_default_val);
+	cpuidle_pd_state_modified = 0;
 
+	if (!use_default_val) {
+		per_st = get_pd_per_stctrl_val(4);
+		mpu_st = get_pd_mpu_stctrl_val(4);
+
+		/* MPU power domain state change */
+		pd_state_change(mpu_st, PD_MPU);
+
+		/* PER power domain state change */
+		pd_state_change(per_st, PD_PER);
+		cpuidle_pd_state_modified = 1;
+
+	}
+
+	configure_standby_wake_sources(local_cmd->wake_sources,
+							use_default_val);
 	mpu_clkdm_sleep();
 }
 
@@ -558,6 +579,14 @@ void a8_wake_cmdb_handler()
  */
 void a8_wake_cmd10_handler()
 {
+
+	if (cpuidle_pd_state_modified == 1)
+		pd_state_restore();
+
+	clkdm_wake();
+
+	essential_modules_enable();
+
 	clear_wake_sources();
 
 	mpu_clkdm_wake();
